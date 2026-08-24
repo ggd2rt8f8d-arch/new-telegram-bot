@@ -622,17 +622,11 @@ async def process_ban(message: Message, state: FSMContext):
         await message.answer(f"🚫 <code>{uid}</code> забанен", parse_mode="HTML")
     else:
         await unban_user(uid)
-        await message.answer(f"✅ <code>{uid}</code> разбанен", parse_mode="HTML")
-
-
-# ---------- Выдача фильма (самый общий хэндлер) ----------
-@dp.message(F.text)
-async def handle_code(message: Message, state: FSMContext):
-    # Если пользователь находится в любом состоянии FSM — игнорируем
-    current_state = await state.get_state()
-    if current_state is not None:
-        return
-
+        await message.answer(f"✅ <code>{uid}</code> разбанен", parse_mode="
+    
+# ---------- Выдача фильма (только когда НЕТ активного состояния) ----------
+@dp.message(StateFilter(None), F.text)
+async def handle_code(message: Message):
     if await is_banned(message.from_user.id):
         return await message.answer("🚫 Вы заблокированы в боте.")
 
@@ -653,7 +647,6 @@ async def handle_code(message: Message, state: FSMContext):
         f"{movie['description']}"
     )
     await message.answer_photo(photo=movie["poster"], caption=caption, parse_mode="HTML")
-
 
 # -------------------- Запуск --------------------
 async def main():

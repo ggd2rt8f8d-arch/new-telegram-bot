@@ -622,7 +622,7 @@ async def process_ban(message: Message, state: FSMContext):
         await message.answer(f"🚫 <code>{uid}</code> забанен", parse_mode="HTML")
     else:
         await unban_user(uid)
-        await message.answer(f"✅ <code>{uid}</code> разбанен", parse_mode=")
+        await message.answer(f"✅ <code>{uid}</code> разбанен", parse_mode="HTML")
     
 # ---------- Выдача фильма (только когда НЕТ активного состояния) ----------
 @dp.message(StateFilter(None), F.text)

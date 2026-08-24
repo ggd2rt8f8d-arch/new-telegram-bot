@@ -18,7 +18,7 @@ CHANNEL_USERNAME = os.getenv("CHANNEL_USERNAME", "@topzfilmz")
 super_admins_str = os.getenv("SUPER_ADMIN_IDS", "")
 SUPER_ADMIN_IDS = [int(uid.strip()) for uid in super_admins_str.split(",") if uid.strip().isdigit()]
 
-DB_NAME = "movies.db"
+DB_NAME = "/data/movies.db"
 # ===================================================
 
 if not BOT_TOKEN:

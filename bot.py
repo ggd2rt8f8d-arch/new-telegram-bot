@@ -1,4 +1,5 @@
 import asyncio
+import os
 import logging
 import aiosqlite
 from aiogram import Bot, Dispatcher, F
@@ -11,12 +12,17 @@ from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.storage.memory import MemoryStorage
 
 # ==================== НАСТРОЙКИ ====================
-BOT_TOKEN = "8644752125:AAFshcTZh4vTOZAb2CzL4Kk0DCzI3W5Cbt8"
-CHANNEL_USERNAME = "@topzfilmz"
+BOT_TOKEN = os.getenv("BOT_TOKEN")
+CHANNEL_USERNAME = os.getenv("CHANNEL_USERNAME", "@topzfilmz")
 
-SUPER_ADMIN_IDS = [2113363430]  # <-- ЗАМЕНИ НА СВОЙ ID
+super_admins_str = os.getenv("SUPER_ADMIN_IDS", "")
+SUPER_ADMIN_IDS = [int(uid.strip()) for uid in super_admins_str.split(",") if uid.strip().isdigit()]
 
 DB_NAME = "movies.db"
+# ===================================================
+
+if not BOT_TOKEN:
+    raise ValueError("❌ BOT_TOKEN не задан в переменных окружения!")
 # ===================================================
 
 logging.basicConfig(level=logging.INFO)
